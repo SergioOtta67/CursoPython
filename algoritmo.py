@@ -1,5 +1,5 @@
 nombre = "Sergio Otta"
-numero = 18214613
+numero = 18123123
 print ("Nombre Persona : ",nombre)
 print ("Numero de DNI : ",numero)
 
