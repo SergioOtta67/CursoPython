@@ -1,4 +1,5 @@
-# Operadores Aritmeticos
+#Operadores Aritmeticos
+print ("\n")
 num_1 = int(input("Ingresa El Primer  Numero :"))
 num_2 = int(input("Ingresa El Segundo Numero :"))
 print ("\nLa Suma Es ",num_1+num_2)
