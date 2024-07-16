@@ -17,7 +17,7 @@ print(f"\n\nlongitud de Copia : {menu_ppal.largo_dato(5, copia)}")
 
 opc = 0
 i   = len(empleados)
-print("\n"*2)
+print("\n"*10)
 usuario = "Administrador"
 opciones = ["Agregar","Mostrar","Mostrar Activos","Salir"]
 while True:
