@@ -1,29 +1,10 @@
-#titulo     : nombre del menú
-#opciones   : lista str de las opciones que se van a imprimir
-#sale       : opcion para salir del menu
-#tab        : para poner tabulacion 0:no 1:si
-#return opc : es la opcion seleccionada por el usuario
-def menu_opciones(titulo : str, opciones : list[str], sale : int, tab : int, usuario : str):
-    print (f"MENU: {titulo} ** {usuario.capitalize()} **")
-    print ("-"*(len(titulo)+len(usuario)+14))
-    tope = len(opciones)
-    for x in range(tope):
-        if tab==1:
-            print(f"\t{x+1}-{opciones[x]}")
-        else:
-            print(f"{x+1}-{opciones[x]}")
-    opc = 0
-    while True:
-        opc = input("\tTu Opcion : ")
-        if (opc.isdigit()): 
-            opc = int(opc)
-            if (opc>0 and opc<=sale):
-                break
-            elif (opc==0 or opc>sale):
-                print("\nOpcion Incorrecta !!!!\n")
-        else:
-            print ("\nSeleccione solo numeros !!!!\n")
-    return opc
+# librerias es librerias.py donde tengo todas mis funciones
+# que voy a poder usar en distintos programas de python
+# menu_ppal es el nombre local que voy a usar 
+# en el archivo librerias.py la funcion se llama menu_func
+# localmente se debe llamar => menu_ppal.menu_func
+#
+import librerias as menu_ppal
 
 
 empleados = {
@@ -31,28 +12,26 @@ empleados = {
                 "002" : ("Pablo",     66, True,  15324567, False),
                 "003" : ("Ana Maria", 32, False, 55001123, True)
             }
-
+copia = []
+print(f"\n\nlongitud de Copia : {menu_ppal.largo_dato(5, copia)}")
 
 opc = 0
 i   = len(empleados)
+print("\n"*2)
+usuario = "Administrador"
+opciones = ["Agregar","Mostrar","Mostrar Activos","Salir"]
 while True:
-    opc = menu_opciones("Ingreso Empleado", ["Agregar","Mostrar","Mostrar Activos","Salir"],4,1,"Administrador")
+    opc = menu_ppal.menu_func("Ingreso de Empleados", opciones, 4 , 1, usuario)
     if opc==1:
         id = input(f"\n{i+1} Ingrese ID :")
         if id in empleados:
             print(f"\nEl ID {id} ya fue ingresado\n")
         else:
             i += 1
-            nombre = input("Nombre: ")
-            edad = int(input("Edad: "))
-            sexo = input("Sexo: ")
-            sexo = True if sexo == "Masculino" else False
-            dni  = int(input("DNI: "))
-            trabaja = bool( input("Trabaja 0 (no) 1 (si) : ") )
-            agregar_empleado = { id : (nombre, edad, sexo, dni, trabaja) }
-            empleados.update( agregar_empleado )
+            info_empleado = menu_ppal.ingreso_empleado(id)
+            empleados.update( info_empleado )
     elif opc==2:
-        if empleados=={}:
+        if len(empleados)==0:
             print("\nNo hay informacion cargada aun !!!!\n")
         else:
             print("\nEmpleados Ingresados : ")
@@ -61,9 +40,10 @@ while True:
                 nombre = value[0].capitalize()
                 sexo = "Masculino" if value[2] else "Femenino"
                 estado = "En Actividad" if value[4] else "INACTIVO"
-                print(f"ID: {key}\n\tNombre: {nombre}, Edad: {value[1]}, Sexo: {sexo}, DNI: {dni}, Estado: {estado}")
+                nada = " "*5
+                print(f"ID: {key:10} Nombre: {nombre:20} Edad: {value[1]:3} {nada} Sexo: {sexo:15} DNI: {dni:15} Estado: {estado}")
     elif opc==3:
-        if empleados=={}:
+        if len(empleados)==0:
             print("\nNo hay informacion cargada aun !!!!\n")
         else:
             print("\nEmpleados En Actividad : ")
@@ -72,7 +52,8 @@ while True:
                     dni = f"{value[3]:,}".replace(",", ".")
                     nombre = value[0].capitalize()
                     sexo = "Masculino" if value[2] else "Femenino"
-                    print(f"ID: {key}\n\tNombre: {nombre}, Edad: {value[1]}, Sexo: {sexo}, DNI: {dni}")
+                    nada = " "*5
+                    print(f"ID: {key:10} Nombre: {nombre:20} Edad: {value[1]:3} {nada} Sexo: {sexo:15} DNI: {dni:15}")
     elif opc==4:
-        print("\nHasta Pronto\n")
+        print(f"\nHasta Pronto {usuario.capitalize()}\n")
         break
