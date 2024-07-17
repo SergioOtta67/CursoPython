@@ -14,7 +14,7 @@
 #          3-Mostrar Activos
 #          4-Salir
 #          Tu Opcion : 
-def menu_func(titulo : str, opciones : list[str], sale : int, tab : int, usuario : str) -> int:
+def menu(titulo : str, opciones : list[str], sale : int, tab : int, usuario : str) -> int:
     mostrar = f"MENU: {titulo} ** {usuario.capitalize()} **"
     print (f"{mostrar}")
     print ("-"*(len(mostrar)))
@@ -51,6 +51,31 @@ def largo_dato(tipo_dato : int, dato_info : str) -> int:
         sale = f"Error en dato {dato_info} es del tipo {type(dato_info)}"
     return sale
 
+def leer(mensaje : str, tipo : int) -> str:
+    while True:
+        entrada = input(f"{mensaje}")
+        #print(f"\nValor del tipo @{type(entrada)}@")
+        if   tipo == 1 and type(int(entrada)) != int:
+            print("El Valor Ingresado no es un entero")
+        elif tipo == 2 and type(entrada) != str:
+            print("El Valor Ingresado no es un string")
+        elif tipo == 3 and type(float(entrada)) != float:
+            print("El Valor Ingresado no es un Numero con decimales")
+        elif tipo == 4 and type(bool(entrada)) != bool:
+            print("El Valor Ingresado no es un Numero con decimales")
+        else:
+            if tipo == 1:
+                if entrada.isdigit(): 
+                    entrada = int(entrada) 
+                else:
+                    entrada = 0
+                    print ("Error en tipo de dato")
+            elif tipo == 3:
+                entrada = float(entrada)
+            break
+
+    return entrada
+
 def ingreso_empleado(id):
     nombre  = ""
     edad    = 0
@@ -58,34 +83,30 @@ def ingreso_empleado(id):
     dni     = 0
     trabaja = 9
     confirma = "N"
-    largomax = 20
+    largomax = 15
     while len(nombre)==0 or len(nombre) > largomax:
-        nombre  =     input("Nombre   : ")
+        nombre  =     leer("Nombre   : ", 2)
         if len(nombre)>largomax:
             nombre = nombre[:largomax]
             print(f"El nombre quedará : {nombre}")
             confirma = ""
             while confirma != "N" and confirma != "S":
-                confirma = input("Confirma cortar el nombre ? S=SI N=NO : ")
+                confirma = leer("Confirma cortar el nombre ? S=SI N=NO : ", 1)
             if confirma == "N":
                 nombre = ""
     while edad < 1 or edad > 120:
-        edad    = input("Edad     : ")
-        if edad.isdigit(): 
-            edad = int(edad) 
-        else:
-            edad = 0
-            print ("Error en tipo de dato")
+        edad    = leer("Edad     : ", 1)
     while sexo != "Masculino" and sexo != "Femenino":
-        sexo    =     input("Sexo     : ")
+        sexo    =     leer("Sexo     : ", 2)
+        if sexo=="M":
+            sexo = "Masculino"
+        elif sexo == "F":
+            sexo = "Femenino"
+
     sexo    = True if sexo == "Masculino" else False
     while dni <= 0 or dni >= 99000000:
-        dni     = input("D.N.I.   : ")
-        if dni.isdigit():
-            dni = int(dni)
-        else:
-            dni = 0
-            print ("Error en tipo de dato debe ser numerico > 0 y < 99.000.000")
+        dni     = leer("D.N.I.   : ", 1)
+
     while trabaja < 0 or trabaja > 1:
         trabaja = input("Trabaja 0=NO 1=SI : ")
         if trabaja.isdigit():
@@ -94,5 +115,15 @@ def ingreso_empleado(id):
             trabaja = 9
             print("Valor inválido")
     trabaja = bool(trabaja)
-    agregar_empleado = { id : (nombre, edad, sexo, dni, trabaja) }
+    sueldo = 0.0
+    if trabaja:
+        while sueldo <= 0:
+            sueldo = leer("Sueldo   : ", 3)
+
+    agregar_empleado = { id : (nombre, edad, sexo, dni, trabaja, sueldo) }
     return agregar_empleado
+
+def formatear_id(id : str, largo : int) -> str:
+    texto = "0"*3+id
+    salida = texto[-largo:]
+    return salida
