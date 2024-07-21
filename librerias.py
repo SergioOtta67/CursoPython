@@ -51,7 +51,34 @@ def largo_dato(tipo_dato : int, dato_info : str) -> int:
         sale = f"Error en dato {dato_info} es del tipo {type(dato_info)}"
     return sale
 
+
 def leer(mensaje : str, tipo : int) -> str:
+    try:
+        if tipo == 1:
+            entrada = int(input(f"{mensaje}"))
+        elif tipo == 2:
+            entrada = input(f"{mensaje}")
+        elif tipo == 3:
+            entrada = float(input(f"{mensaje}"))
+        elif tipo == 4:
+            entrada = bool(input(f"{mensaje}"))
+        else:
+            print("Error en Tipo de Datos ")
+    except ValueError:
+        entrada = 0
+        if tipo == 1:
+            print("El Valor Ingresado no es un entero ")
+        elif tipo == 2:
+            print("El Valor Ingresado no es un string ")
+            entrada = ""
+        elif tipo == 3:
+            print("El Valor Ingresado no es un Boleano ")
+        elif tipo == 4:
+            print("El Valor Ingresado no es un Numero con decimales ")
+        
+    return entrada
+
+def leer_1(mensaje : str, tipo : int) -> str:
     while True:
         entrada = input(f"{mensaje}")
         #print(f"\nValor del tipo @{type(entrada)}@")

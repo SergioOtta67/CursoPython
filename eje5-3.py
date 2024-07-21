@@ -5,19 +5,20 @@
 # localmente se debe llamar => lib.menu_func
 #
 import librerias as lib
-
+import librerias_classes as libclase
+#               legajo   nombre     edad  M/F      dni    trabaja     sueldo
 empleados = {
-                "001" : ("Jose Luis", 25, True,  42333111, True,  433000.15),
-                "002" : ("Pablo",     66, True,  15324567, False, 145000.00),
-                "003" : ("Ana Maria", 32, False, 55001123, True,  675090.88)
+                "001" : ("Jose Luis", 25, True,  42333111, True,     433000.15),
+                "002" : ("Pablo",     66, True,  15324567, False,    145000.00),
+                "003" : ("Ana Maria", 32, False, 55001123, True,     675090.88)
             }
 opc = 0
 i   = len(empleados)
 print("\n"*10)
 usuario = "Administrador"
-opciones = ["Agregar","Mostrar","Mostrar Activos","Salir"]
+opciones = ["Agregar","Mostrar","Mostrar Activos","Mostrar Activos (Clases)","Salir"]
 while True:
-    opc = lib.menu("Ingreso de Empleados", opciones, 4 , 1, usuario)
+    opc = lib.menu("Ingreso de Empleados", opciones, 5, 1, usuario)
     if opc==1:
         id = input(f"\n{i+1} Ingrese ID :")
         if len(id)<3:
@@ -74,5 +75,26 @@ while True:
                     print(f"ID: {key:5} {nombre:15} {value[1]:3}   {sexo:12} {dni:15} {sueldo:15}")
             print("\n\n")
     elif opc==4:
+        if len(empleados)==0:
+            print("\nNo hay informacion cargada aun !!!!\n")
+        else:
+            print("\nEmpleados En Actividad : \n")
+            print("ID:       Nombre         Edad      Sexo         DNI            Sueldo")
+            milista = []
+            for key, value in empleados.items():
+                #if value[4]:
+                    print (f"Key={key}")
+                    miempleado = libclase.Empleado(key, value[0], value[1], value[2], value[3], value[4], value[5])
+                    miempleado.mostrar_info_renglon()
+                    milista.append(miempleado)
+            print("\n\n")
+            largo = len(milista)
+            print(f"el largo es : {largo}")
+            i = 0
+            while i<largo:
+                vale = milista.index
+                print(f"{i}-Informacion del Empleado : \n{milista[i].index()}")
+                i += 1
+    elif opc==5:
         print(f"\nHasta Pronto {usuario.capitalize()}\n")
         break
